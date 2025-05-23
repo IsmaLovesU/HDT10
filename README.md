@@ -4,3 +4,10 @@ Por medio de la implementación de una grafo de una matriz de adyacencia, encont
 - Marcela Castillo 
 
 - Andrés Ismalej 24005
+
+
+## UML:
+![Diagrama UML ](resources/UML.png)
+
+
+
