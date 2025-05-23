@@ -1,5 +1,12 @@
 package com.example;
 
+/**
+ * Universidad del Valle de Guatemala 
+ * Algoritmos y Estructuras de Datos
+ * Ing. Douglas Barrios / Aux: Cristian Túnchez
+ * @author: Marcela Castillo y Andrés Ismalej
+*/
+
 import java.util.*;
 
 public class Floyd {
