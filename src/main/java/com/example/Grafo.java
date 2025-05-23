@@ -1,5 +1,12 @@
 package com.example;
 
+/**
+ * Universidad del Valle de Guatemala 
+ * Algoritmos y Estructuras de Datos
+ * Ing. Douglas Barrios / Aux: Cristian Túnchez
+ * @author: Marcela Castillo y Andrés Ismalej
+*/
+
 import java.io.*;
 import java.util.*;
 
@@ -8,6 +15,19 @@ public class Grafo {
     private List<Ciudad> ciudades = new ArrayList<>();
     private Map<String, Integer> mapCitys = new HashMap<>();
     private int[][][] matrizTiempos; // [clima][i][j]
+
+    public int[][] getMatrizClima(int clima) {
+    return matrizTiempos[clima];
+    }
+
+    public List<Ciudad> getCiudades() {
+    return ciudades;
+    }
+
+    public int getIndiceCiudad(String nombre) {
+    return (int) mapCitys.getOrDefault(nombre, -1);
+    }
+
 
     public void cargarGrafosDeArchivo(String nom) {
         try (BufferedReader br = new BufferedReader(new FileReader(nom))) {
