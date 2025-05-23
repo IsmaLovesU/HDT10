@@ -90,6 +90,43 @@ public class Grafo {
         return nueva;
     }
 
+
+    //El centro es la ciudad con menor excentricidad. Su camino más largo hacia cualquier otra ciudad es el más corto posible
+    public List<Centro> calcularCentros() {
+        List<Centro> centros = new ArrayList<>();
+        String[] nombresClimas = {"Normal", "Lluvia", "Nieve", "Tormenta"};
+
+        for (int clima = 0; clima < numClimas; clima++) {
+            Floyd floyd = new Floyd(matrizTiempos[clima], ciudades);
+            int[][] distancias = floyd.getDistancias();
+
+            int n = ciudades.size();
+            int centro = -1;
+            int menorExcentricidad = Integer.MAX_VALUE;
+
+            for (int i = 0; i < n; i++) {
+                int excentricidad = 0;
+                for (int j = 0; j < n; j++) {
+                    if (i != j) {
+                        excentricidad = Math.max(excentricidad, distancias[i][j]);
+                    }
+                }
+
+                if (excentricidad < menorExcentricidad) {
+                    menorExcentricidad = excentricidad;
+                    centro = i;
+                }
+            }
+
+            if (centro != -1) {
+                centros.add(new Centro(nombresClimas[clima], ciudades.get(centro).getNombre(), menorExcentricidad));
+            }
+        }
+
+        return centros;
+    }
+
+
     public void cargarGrafosDeArchivo(String nom) {
         try (BufferedReader br = new BufferedReader(new FileReader(nom))) {
             List<String[]> conexiones = new ArrayList<>();

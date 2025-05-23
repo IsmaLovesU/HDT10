@@ -69,8 +69,13 @@ public class Main {
 
                 // Centro del grafo
                 case "2":
-                   
-
+                     List<Centro> centros = grafo.calcularCentros();
+                        for (Centro info : centros) {
+                            System.out.println("Clima " + info.getClima() +
+                                " → Centro: " + info.getCiudadCentro() +
+                                " (excentricidad: " + info.getExcentricidad() + ")");
+                        }
+                    break;
                 // Modificar conexión entre nodos o "ciudades"
                 case "3":
                     // Ingreso de las ciudades para la modificación de la conexión entre ellas
