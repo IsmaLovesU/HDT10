@@ -28,6 +28,67 @@ public class Grafo {
     return (int) mapCitys.getOrDefault(nombre, -1);
     }
 
+    // Actualiza los tiempos entre dos ciudades existentes
+    public boolean modificarConexion(String ciudad1, String ciudad2, int[] nuevosTiempos) {
+        Integer i = mapCitys.get(ciudad1);
+        Integer j = mapCitys.get(ciudad2);
+        if (i == null || j == null) return false;
+
+        for (int clima = 0; clima < numClimas; clima++) {
+            matrizTiempos[clima][i][j] = nuevosTiempos[clima];
+        }
+        return true;
+    }
+
+    // Agrega una nueva conexión entre dos ciudades (si existen o las crea)
+    public void agregarConexion(String ciudad1, String ciudad2, int[] tiempos) {
+        int i = getOAgregarIndice(ciudad1);
+        int j = getOAgregarIndice(ciudad2);
+
+        for (int clima = 0; clima < numClimas; clima++) {
+            matrizTiempos[clima][i][j] = tiempos[clima];
+        }
+    }
+
+    // Elimina una conexión (establece valor infinito)
+    public boolean eliminarConexion(String ciudad1, String ciudad2) {
+        Integer i = mapCitys.get(ciudad1);
+        Integer j = mapCitys.get(ciudad2);
+        if (i == null || j == null) return false;
+
+        for (int clima = 0; clima < numClimas; clima++) {
+            matrizTiempos[clima][i][j] = Integer.MAX_VALUE / 2;
+        }
+        return true;
+    }
+
+    // Agrega ciudad si no existe y retorna el índice
+    private int getOAgregarIndice(String ciudad) {
+        if (!mapCitys.containsKey(ciudad)) {
+            int nuevoIndice = ciudades.size();
+            mapCitys.put(ciudad, nuevoIndice);
+            ciudades.add(new Ciudad(ciudad, nuevoIndice));
+            for (int clima = 0; clima < numClimas; clima++) {
+                matrizTiempos[clima] = redimensionarMatriz(matrizTiempos[clima], nuevoIndice + 1);
+            }
+        }
+        return mapCitys.get(ciudad);
+    }
+
+    // Redimensiona una matriz cuadrada (aumenta en 1)
+    private int[][] redimensionarMatriz(int[][] matrizVieja, int nuevoTamaño) {
+        int[][] nueva = new int[nuevoTamaño][nuevoTamaño];
+        for (int[] fila : nueva)
+            Arrays.fill(fila, Integer.MAX_VALUE / 2);
+        for (int i = 0; i < nuevoTamaño - 1; i++) {
+            for (int j = 0; j < nuevoTamaño - 1; j++) {
+                nueva[i][j] = matrizVieja[i][j];
+            }
+            nueva[i][i] = 0;
+        }
+        nueva[nuevoTamaño - 1][nuevoTamaño - 1] = 0;
+        return nueva;
+    }
 
     public void cargarGrafosDeArchivo(String nom) {
         try (BufferedReader br = new BufferedReader(new FileReader(nom))) {
@@ -57,13 +118,6 @@ public class Grafo {
 
                 conexiones.add(c); // Guardamos la conexión para después
             }
-
-            // Mostrar las conexiones interpretadas
-            // System.out.println("\nConexiones cargadas:");
-            // for (String[] datos : conexiones) {
-            //     System.out.println(Arrays.toString(datos));
-            // }
-
 
             //Inicializar la matriz de tiempos
             int n = ciudades.size();

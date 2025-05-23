@@ -58,27 +58,5 @@ public class Floyd {
         return dist;
     }
 
-    public String obtenerCentroDelGrafo() {
-        int n = dist.length;
-        int[] excentricidad = new int[n];
-
-        for (int i = 0; i < n; i++) {
-            int max = 0;
-            for (int j = 0; j < n; j++) {
-                if (dist[i][j] > max) {
-                    max = dist[i][j];
-                }
-            }
-            excentricidad[i] = max;
-        }
-
-        int centro = 0;
-        for (int i = 1; i < n; i++) {
-            if (excentricidad[i] < excentricidad[centro]) {
-                centro = i;
-            }
-        }
-
-        return ciudades.get(centro).getNombre();
-    }
+    
 }
