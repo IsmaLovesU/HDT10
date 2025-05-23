@@ -6,8 +6,8 @@ package com.example;
  * Ing. Douglas Barrios / Aux: Cristian Túnchez
  * @author: Marcela Castillo y Andrés Ismalej
 */
-
-import java.util.*;
+import java.util.ArrayList;
+import java.util.List;
 
 public class Floyd {
     private final int INF = Integer.MAX_VALUE / 2;
@@ -58,5 +58,27 @@ public class Floyd {
         return dist;
     }
 
-    
+    public String obtenerCentroDelGrafo() {
+        int n = dist.length;
+        int[] excentricidad = new int[n];
+
+        for (int i = 0; i < n; i++) {
+            int max = 0;
+            for (int j = 0; j < n; j++) {
+                if (dist[i][j] > max) {
+                    max = dist[i][j];
+                }
+            }
+            excentricidad[i] = max;
+        }
+
+        int centro = 0;
+        for (int i = 1; i < n; i++) {
+            if (excentricidad[i] < excentricidad[centro]) {
+                centro = i;
+            }
+        }
+
+        return ciudades.get(centro).getNombre();
+    }
 }

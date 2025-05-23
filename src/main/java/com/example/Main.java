@@ -69,12 +69,9 @@ public class Main {
 
                 // Centro del grafo
                 case "2":
-                     List<Centro> centros = grafo.calcularCentros();
-                        for (Centro info : centros) {
-                            System.out.println("Clima " + info.getClima() +
-                                " → Centro: " + info.getCiudadCentro() +
-                                " (excentricidad: " + info.getExcentricidad() + ")");
-                        }
+                    Floyd floyd2 = new Floyd(grafo.getMatrizClima(0), grafo.getCiudades());
+                    String centro = floyd2.obtenerCentroDelGrafo();
+                    System.out.println("Centro del grafo: " + centro);
                     break;
                 // Modificar conexión entre nodos o "ciudades"
                 case "3":
